@@ -1,14 +1,31 @@
 """Centralized configuration knobs for the crawler service."""
 
+from __future__ import annotations
+
+import os
+
+
+def _get_bool_env(name: str, default: bool) -> bool:
+    """Parse boolean environment flags with sensible defaults."""
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+# 服务端口
+CRAWLER_PORT = int(os.getenv("CRAWLER_PORT", "8001"))
+
 # 爬虫设置
-CRAWL_INTERVAL = 3600  # 爬取间隔(秒)
+CRAWL_INTERVAL = int(os.getenv("CRAWL_INTERVAL", "3600"))  # 爬取间隔(秒)
 REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
+AUTO_CRAWL_ENABLED = _get_bool_env("AUTO_CRAWL_ENABLED", True)
 
 # 向量服务配置
 VECTOR_SERVICE = {
     "enabled": True,
-    "base_url": "http://localhost:9000",  # NRS_vector 服务地址或本地 mock
+    "base_url": os.getenv("VECTOR_SERVICE_BASE_URL", "http://localhost:8002"),  # NRS_vector 服务地址或本地 mock
     "timeout": 10,
     "api_key": None,
 }
