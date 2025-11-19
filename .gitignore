@@ -1,0 +1,26 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv*/
+venv/
+
+# Local databases & state
+*.sqlite
+*.db
+crawler.sqlite
+data/crawler.db
+
+# OS / tooling noise
+.DS_Store
+Thumbs.db
+output.json
+
+# Editor settings
+.vscode/
+.idea/
+
+web_list.txt
+web_backup.txt
