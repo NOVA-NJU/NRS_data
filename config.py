@@ -25,7 +25,7 @@ AUTO_CRAWL_ENABLED = _get_bool_env("AUTO_CRAWL_ENABLED", True)
 # 向量服务配置
 VECTOR_SERVICE = {
     "enabled": True,
-    "base_url": os.getenv("VECTOR_SERVICE_BASE_URL", "http://localhost:8002"),  # NRS_vector 服务地址或本地 mock
+    "base_url": os.getenv("VECTOR_SERVICE_BASE_URL", "http://localhost:8000"),  # 后端 2 服务地址或本地 mock
     "timeout": 10,
     "api_key": None,
 }

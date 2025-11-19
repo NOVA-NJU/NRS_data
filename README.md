@@ -22,12 +22,12 @@
 
 ## 运行步骤
 
-1. **确保向量服务 8002 已就绪**（TeamB 的“后端 2”模块）。如果需要本地联调且暂时没有真实服务，可运行 `mock_vector_service.py`，但默认直接对接团队的向量数据库接口。
+1. **确保向量服务 8000 已就绪**（TeamB 的“后端 2”模块）。如果需要本地联调且暂时没有真实服务，可运行 `mock_vector_service.py`，但默认直接对接团队的向量数据库接口。
 
    ```powershell
    # 仅在无后端 2 时需要临时 mock
    .\.venv310\Scripts\activate
-   uvicorn mock_vector_service:app --host 0.0.0.0 --port 8002 --reload
+   uvicorn mock_vector_service:app --host 0.0.0.0 --port 8000 --reload
    ```
 
 2. **启动 FastAPI 主服务（端口 8001，符合 TeamB 规范）**
@@ -51,9 +51,9 @@
   set CRAWL_INTERVAL=1800
   set AUTO_CRAWL_ENABLED=true
   ```
-- **向量服务端口**：默认 `VECTOR_SERVICE_BASE_URL=http://localhost:8002`，若接入其它端口/服务，只需：
+- **向量服务端口**：默认 `VECTOR_SERVICE_BASE_URL=http://localhost:8000`，若接入其它端口/服务，只需：
    ```powershell
-   set VECTOR_SERVICE_BASE_URL=http://vector-host:8002
+   set VECTOR_SERVICE_BASE_URL=http://vector-host:8000
    ```
 - **自动定时爬取**：服务启动后会在后台按 `CRAWL_INTERVAL` 依次抓取 `TARGET_SOURCES`。若只想手动触发，可把 `AUTO_CRAWL_ENABLED` 设成 `false`。
 
@@ -66,12 +66,12 @@
    ```
 - **向量服务**：默认对接团队的后端 2，可直接通过其 `/vectors/documents` 接口查看文档；若临时启用 mock，命令如下：
    ```powershell
-   Invoke-RestMethod -Uri http://localhost:8002/vectors/documents | ConvertTo-Json -Depth 5
-   Invoke-RestMethod -Uri http://localhost:8002/vectors/documents/<document_id>
+   Invoke-RestMethod -Uri http://localhost:8000/vectors/documents | ConvertTo-Json -Depth 5
+   Invoke-RestMethod -Uri http://localhost:8000/vectors/documents/<document_id>
    ```
 - **清空状态（可选）**：
    ```powershell
-   Invoke-RestMethod -Uri http://localhost:8002/vectors/documents -Method Delete
+   Invoke-RestMethod -Uri http://localhost:8000/vectors/documents -Method Delete
    sqlite3 data/crawler.db "DELETE FROM crawled_records;"
    ```
 
